@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: bisque;
+}
+
+.titulo {
+    background-color: darksalmon;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+}
+.carrito-conteiner {
+    
+    text-align: center; ;
+    padding: 20px;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-left: 40%;
+}

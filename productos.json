@@ -1,0 +1,50 @@
+  [
+    {
+       "id":1,
+       "nombre":"Fernet",
+       "img": "fernet.jpg",
+       "precio": 3000
+    },
+    {
+        "id":2,
+        "nombre":"Gancia",
+        "img": "gancia.jpg",
+        "precio": 3000
+     },
+     {
+        "id":3,
+        "nombre":"Smirnoff",
+        "img": "smirnoff.jpg",
+        "precio": 3000
+     },
+     {
+        "id":4,
+        "nombre":"Absolut",
+        "img": "absolut.jpg",
+        "precio": 3000
+     },
+     {
+        "id":5,
+        "nombre":"Mumm",
+        "img": "mumm.jpg",
+        "precio": 3000
+     },
+     {
+        "id":6,
+        "nombre":"Baron B",
+        "img": "baronb.jpg",
+        "precio": 3000
+     },
+     {
+        "id":7,
+        "nombre":"Red Label",
+        "img": "redlabel.jpg",
+        "precio": 3000 
+     },
+     {
+        "id":8,
+        "nombre":"Black Label",
+        "img": "blacklabel.jpg",
+        "precio": 3000 
+     }
+    ]  
