@@ -1,143 +1,131 @@
 
-const productos = [
+let conteiner = document.getElementById("conteiner")
+
+let productos =[
     {
-       id:1,
-       nombre:"Fernet",
-       img: "fernet.jpg",
-       precio: 3000, 
+       "id":1,
+       "nombre":"Fernet",
+       "img": "fernet.jpg",
+       "precio": 3000
     },
     {
-        id:2,
-        nombre:"Gancia",
-        img: "gancia.jpg",
-        precio: 3000, 
+        "id":2,
+        "nombre":"Gancia",
+        "img": "gancia.jpg",
+        "precio": 3000
      },
      {
-        id:3,
-        nombre:"Smirnoff",
-        img: "smirnoff.jpg",
-        precio: 3000, 
+        "id":3,
+        "nombre":"Smirnoff",
+        "img": "smirnoff.jpg",
+        "precio": 3000
      },
      {
-        id:4,
-        nombre:"Absolut",
-        img: "absolut.jpg",
-        precio: 3000, 
+        "id":4,
+        "nombre":"Absolut",
+        "img": "absolut.jpg",
+        "precio": 3000
      },
      {
-        id:5,
-        nombre:"Mumm",
-        img: "mumm.jpg",
-        precio: 3000, 
+        "id":5,
+        "nombre":"Mumm",
+        "img": "mumm.jpg",
+        "precio": 3000
      },
      {
-        id:6,
-        nombre:"Baron B",
-        img: "baronb.jpg",
-        precio: 3000, 
+        "id":6,
+        "nombre":"Baron B",
+        "img": "baronb.jpg",
+        "precio": 3000
      },
      {
-        id:7,
-        nombre:"Red Label",
-        img: "redlabel.jpg",
-        precio: 3000, 
+        "id":7,
+        "nombre":"Red Label",
+        "img": "redlabel.jpg",
+        "precio": 3000
      },
      {
-        id:8,
-        nombre:"Black Label",
-        img: "blacklabel.jpg",
-        precio: 3000, 
+        "id":8,
+        "nombre":"Black Label",
+        "img": "blacklabel.jpg",
+        "precio": 3000
      }
     
 ]
 
-const contenedor = document.querySelector(".contenedor");
-const listaCarrito = document.getElementById("lista-carrito");
+    productos.forEach ((item) =>{
+    let div = document.createElement("div");
+    div.classList.add("listaProductos")
+    div.innerHTML = `
+        <h2>${item.nombre}</h2>
+        <img src="./img/${item.img}">
+        <p>ID: ${item.id}</p>
+        $${item.precio}
 
-function crearProducto() {
-    productos.forEach((item) => {
-        let div = document.createElement("div");
-        div.className = "productos";
-        div.innerHTML = `
-        <h2>${item.nombre}</h2><br>
-        <img src="./img/${item.img}"><br>
-        <b>Precio: ${item.precio}</b><br>
-        <button onclick="agregarAlCarrito(${item.id})">Añadir al carrito</button>
-        `;
+        <button class="boton" data-id="${item.id}"> Agregar al carrito</button>
+    `;
 
-        contenedor.append(div);
-    });
-}
-
-crearProducto();
-
-JSON.parse(localStorage.getItem("carrito")) === null && localStorage.setItem("carrito", JSON.stringify([]))
-const carrito = [];
+    conteiner.append(div);
+     
+});
 
 
-
-function agregarAlCarrito(productId) {
-    const productoEncontrado = productos.find((item) => item.id === productId);
-
-    if (productoEncontrado) {
-        carrito.push(productoEncontrado);
-        actualizarCarrito();
-        mostrarMensaje(`"${productoEncontrado.nombre}" se ha añadido al carrito.`);
-        guardarCarritoEnLocalStorage(); 
-    } else {
-        mostrarMensaje('Producto no encontrado.');
-    }
-}
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+let total = 0;
 
 function guardarCarritoEnLocalStorage() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-function actualizarCarrito() {
-    listaCarrito.innerHTML = "Su carrito";
 
-    let totalCompra = 0; // Inicializa el total en 0
+let botones = document.querySelectorAll(".boton");
+let listaCarrito = document.getElementById("lista-carrito");
+let totalCarrito = document.getElementById("total");
 
-    carrito.forEach((producto) => {
-        const li = document.createElement("li");
-        li.textContent = `${producto.nombre} - Precio: $${producto.precio}`;
-        listaCarrito.appendChild(li);
+botones.forEach((boton) => {
+   boton.addEventListener("click", () => {
+       const productoID = parseInt(boton.getAttribute("data-id"));
+       const productoSeleccionado = productos.find((item) => item.id === productoID);
 
-        totalCompra += producto.precio; // Suma el precio del producto al total
-    });
-
-    // Muestra el total de la compra en el carrito
-    const totalLi = document.createElement("li");
-    totalLi.textContent = `Total de la compra: $${totalCompra}`;
-    listaCarrito.appendChild(totalLi);
-}
-
-function mostrarMensaje(mensaje) {
-    Swal.fire({
-        title: mensaje,
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-    });
-}
-
-
-let listado = document.getElementsByClassName("listado");
-
-
-fetch("./productos.json")
-.then((response) => response.json())
-.then((data) => {
-    data.forEach((item) => {
-        const li = document.createElement("li");
-        li.innerHTML = `
-        <h2>${item.nombre}</h2>
-        <img src="img/${item.img}"/> <!-- Cambio aquí -->
-        <p>${item.precio}</p>
-        `;
-        listado.append(li);
-    });
+       if (productoSeleccionado) {
+           carrito.push(productoSeleccionado);
+           actualizarCarrito();
+           guardarCarritoEnLocalStorage();
+           Swal.fire(`${productoSeleccionado.nombre} añadido al carrito`);
+       }
+   });
 });
-    
 
+function actualizarCarrito() {
+   listaCarrito.innerHTML = "";
+   total = 0;
 
+   carrito.forEach((producto) => {
+       const listItem = document.createElement("li");
+       listItem.innerHTML = `
+           ${producto.nombre} - $${producto.precio}
+           <button class="eliminar-item" data-id="${producto.id}">Eliminar</button>
+       `;
+       listaCarrito.appendChild(listItem);
+
+       total += producto.precio;
+   });
+
+   totalCarrito.textContent = total;
+   
+   
+   const eliminarBotones = document.querySelectorAll(".eliminar-item");
+   eliminarBotones.forEach((eliminarBoton) => {
+       eliminarBoton.addEventListener("click", (e) => {
+           const productoID = parseInt(eliminarBoton.getAttribute("data-id"));
+           const index = carrito.findIndex((item) => item.id === productoID);
+           if (index !== -1) {
+               carrito.splice(index, 1);
+               actualizarCarrito();
+               guardarCarritoEnLocalStorage();
+           }
+       });
+   });
+}
+
+actualizarCarrito();

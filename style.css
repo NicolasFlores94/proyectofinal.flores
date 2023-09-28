@@ -1,27 +1,38 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-
 body {
-    background-color: bisque;
+    background-color: yellow;
 }
 
-.titulo {
-    background-color: darksalmon;
-    font-size: 40px;
+h1 {
+    font-size: 60px;
     display: flex;
     justify-content: center;
 }
-.carrito-conteiner {
+
+.listaProductos {
+
+    text-align: center;
     
-    text-align: center; ;
-    padding: 20px;
 }
 
-.contenedor {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    margin-left: 40%;
+#carrito {
+    text-align: center;
+    margin-top: 50px;
+    margin-left: 250px;
+    margin-right: 250px;
+    border: solid 1px white;
+    background-color: white;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+p {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+ul {
+    font-size: 20px;
+    font-weight: bold;
 }
